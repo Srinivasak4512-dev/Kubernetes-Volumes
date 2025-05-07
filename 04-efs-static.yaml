@@ -46,17 +46,17 @@ spec:
       claimName: efs-static-claim
 
 ---
-Kind: Service
-apiVersion: v1 
-metadata: 
+apiVersion: v1
+kind: Service
+metadata:
   name: nginx
-spec: 
+spec:
   type: LoadBalancer
   selector:
-  purpose: ebs-static
-ports: 
-- name: nginx-svc-port
-  protocol: TCP 
-  port: 80 # Service Port
-  targetPort: 80 # Container Port
-  nodePort: 30007
+    purpose: ebs-static  # Ensure your pod has this label
+  ports:
+    - name: nginx-svc-port
+      protocol: TCP
+      port: 80        # Exposes the service on port 80
+      targetPort: 80  # Forwards to the container's port 80
+      nodePort: 30007 # Optional: only needed for NodePort or LoadBalancer (specific port)
